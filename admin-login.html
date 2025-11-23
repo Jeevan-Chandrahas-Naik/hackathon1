@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Admin Login | Campus Event Management System</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background:
+        radial-gradient(circle at top, #1f2937 0, #020617 40%, #000 100%),
+        linear-gradient(135deg, #020617, #111827 60%, #020617);
+      color: #e5e7eb;
+    }
+
+    .login-wrapper {
+      width: 100%;
+      max-width: 420px;
+      padding: 20px;
+    }
+
+    .page-title {
+      text-align: center;
+      font-size: 32px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      margin-bottom: 4px;
+    }
+
+    .sub-title {
+      text-align: center;
+      font-size: 14px;
+      color: #9ca3af;
+      margin-bottom: 20px;
+    }
+
+    .login-card {
+      background: radial-gradient(circle at top left, #1f2937, #020617 60%, #000000);
+      border-radius: 18px;
+      padding: 22px 24px 20px;
+      box-shadow:
+        0 0 25px rgba(59, 130, 246, 0.5),
+        0 0 40px rgba(147, 51, 234, 0.4);
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .login-card::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background:
+        radial-gradient(circle at 0% 0%, rgba(59, 130, 246, 0.3), transparent 60%),
+        radial-gradient(circle at 100% 100%, rgba(249, 115, 22, 0.3), transparent 60%);
+      opacity: 0.7;
+      pointer-events: none;
+      mix-blend-mode: screen;
+    }
+
+    .login-inner {
+      position: relative;
+      z-index: 1;
+    }
+
+    .login-heading {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .login-desc {
+      font-size: 13px;
+      color: #9ca3af;
+      margin-bottom: 18px;
+    }
+
+    label {
+      display: block;
+      font-size: 13px;
+      margin-top: 10px;
+      margin-bottom: 4px;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      width: 100%;
+      padding: 9px 10px;
+      border-radius: 999px;
+      border: 1px solid #4b5563;
+      background: rgba(15, 23, 42, 0.9);
+      color: #f9fafb;
+      font-size: 14px;
+      outline: none;
+      transition: border 0.15s, box-shadow 0.15s, background 0.15s;
+    }
+
+    input::placeholder {
+      color: #6b7280;
+    }
+
+    input:focus {
+      border-color: #facc15;
+      box-shadow: 0 0 0 1px rgba(250, 204, 21, 0.5);
+      background: rgba(15, 23, 42, 1);
+    }
+
+    .helper-row {
+      margin-top: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      color: #9ca3af;
+    }
+
+    .helper-row a {
+      color: #facc15;
+      text-decoration: none;
+    }
+
+    .helper-row a:hover {
+      text-decoration: underline;
+    }
+
+    .login-btn {
+      width: 100%;
+      margin-top: 18px;
+      border: none;
+      border-radius: 999px;
+      padding: 11px 16px;
+      font-size: 14px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      cursor: pointer;
+      color: #111827;
+      background: linear-gradient(90deg, #fde047, #f97316);
+      box-shadow:
+        0 0 18px rgba(249, 115, 22, 0.8),
+        0 0 35px rgba(250, 204, 21, 0.7);
+      transition: transform 0.12s, filter 0.12s, box-shadow 0.15s;
+    }
+
+    .login-btn:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.05);
+    }
+
+    .login-btn:active {
+      transform: translateY(0);
+      box-shadow:
+        0 0 10px rgba(249, 115, 22, 0.6),
+        0 0 20px rgba(250, 204, 21, 0.6);
+    }
+
+    .error-msg {
+      margin-top: 10px;
+      font-size: 12px;
+      color: #fca5a5;
+      min-height: 16px;
+    }
+
+    .back-link {
+      margin-top: 16px;
+      text-align: center;
+      font-size: 13px;
+      color: #9ca3af;
+    }
+
+    .back-link a {
+      color: #60a5fa;
+      text-decoration: none;
+    }
+
+    .back-link a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 480px) {
+      .page-title {
+        font-size: 26px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="login-wrapper">
+    <h1 class="page-title">Campus Event Management System</h1>
+    <p class="sub-title">Admin Portal Login</p>
+
+    <div class="login-card">
+      <div class="login-inner">
+        <div class="login-heading">Welcome back, Admin</div>
+        <div class="login-desc">Sign in to manage events, participants, and attendance.</div>
+
+        <form id="adminLoginForm">
+          <label for="username">Username</label>
+          <input type="text" id="username" placeholder="Enter admin username" required />
+
+          <label for="password">Password</label>
+          <input type="password" id="password" placeholder="Enter password" required />
+
+          <div class="helper-row">
+            
+          </div>
+
+          <button type="submit" class="login-btn">Login</button>
+          <div id="errorMsg" class="error-msg"></div>
+        </form>
+      </div>
+    </div>
+
+    <div class="back-link">
+      <span>Back to </span><a href="index.html">Event Portal</a>
+    </div>
+  </div>
+
+  <script>
+    // Simple demo login – change to real API later if needed
+    document.getElementById('adminLoginForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value.trim();
+      const errorMsg = document.getElementById('errorMsg');
+
+      // Demo credentials – change/remove in real project
+      if (username === 'admin' && password === 'admin123') {
+        errorMsg.textContent = '';
+        // Redirect to your admin dashboard page
+        window.location.href = 'admin.html'; // change path if needed
+      } else {
+        errorMsg.textContent = 'Invalid username or password.';
+      }
+    });
+  </script>
+</body>
+</html>

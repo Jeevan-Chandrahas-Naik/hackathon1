@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Campus Event Management System</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+/* Main Page Heading */
+.page-title {
+  text-align: center;
+  font-size: 42px;
+  font-weight: 800;
+  color: #ffffff;
+  margin-top: 10px;
+  letter-spacing: 1px;
+}
+
+/* Small Sub-Heading Under It */
+.sub-title {
+  text-align: center;
+  font-size: 16px;
+  font-weight: 500;
+  color: #cbd5f5;
+  margin-bottom: 25px;
+  opacity: 0.85;
+}
+pre {
+  background: rgba(0,0,0,0.45);
+  color: #ffffff !important;
+  padding: 15px;
+  border-radius: 12px;
+  font-size: 14px;
+  white-space: pre-wrap; 
+  word-wrap: break-word;
+}
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      min-height: 100vh;
+      padding: 32px 40px;
+      color: #f9fafb;
+      background:
+        radial-gradient(circle at 0% 0%, #172554 0, transparent 55%),
+        radial-gradient(circle at 100% 100%, #7c2d12 0, transparent 55%),
+        linear-gradient(135deg, #020617 0%, #020617 40%, #111827 100%);
+    }
+
+    h1 {
+      text-align: left;
+      font-size: 42px;
+      line-height: 1.1;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      color: #f9fafb;
+      margin-bottom: 24px;
+    }
+
+    /* Layout */
+    .layout {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+      justify-content: space-between;
+    }
+
+    .column {
+      flex: 1;
+      min-width: 340px;
+    }
+
+    /* Cards – dark glassmorphism */
+    .card {
+      background: rgba(15, 23, 42, 0.92);
+      border-radius: 24px;
+      padding: 18px 20px 20px;
+      margin-bottom: 18px;
+      box-shadow:
+        0 18px 35px rgba(15, 23, 42, 0.9),
+        0 0 0 1px rgba(148, 163, 184, 0.3);
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      backdrop-filter: blur(8px);
+    }
+
+    .card h2 {
+      margin-top: 0;
+      margin-bottom: 10px;
+      font-size: 18px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #e5e7eb;
+    }
+
+    label {
+      display: block;
+      margin-top: 10px;
+      font-size: 13px;
+      color: #e5e7eb;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 8px 10px;
+      margin-top: 4px;
+      box-sizing: border-box;
+      font-size: 14px;
+      border-radius: 999px;
+      border: 1px solid #4b5563;
+      background: rgba(15, 23, 42, 0.95);
+      color: #e5e7eb;
+      outline: none;
+      transition: border-color 0.15s, box-shadow 0.15s, background 0.15s;
+    }
+
+    textarea {
+      border-radius: 16px;
+      resize: vertical;
+      min-height: 70px;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: #38bdf8;
+      box-shadow: 0 0 0 1px #38bdf8;
+      background: rgba(15, 23, 42, 1);
+    }
+
+    /* Buttons – glowing */
+    button {
+      width: 100%;
+      margin-top: 12px;
+      padding: 10px 14px;
+      font-size: 14px;
+      font-weight: 600;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      letter-spacing: 0.04em;
+      transition: transform 0.12s, box-shadow 0.12s, filter 0.12s;
+      color: #111827;
+      background: linear-gradient(90deg, #facc15, #f97316);
+      box-shadow:
+        0 0 10px rgba(248, 250, 252, 0.8),
+        0 8px 20px rgba(0, 0, 0, 0.5);
+    }
+
+    button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    button:hover:not(:disabled) {
+      transform: translateY(-1px);
+      filter: brightness(1.05);
+    }
+
+    /* Event list pill style */
+    .event-card {
+      margin-top: 8px;
+      padding: 10px;
+      background: linear-gradient(90deg, #a3e635, #facc15);
+      border-radius: 6px;
+      border: 1px solid #ddd;
+
+      box-shadow:
+        0 12px 20px rgba(0, 0, 0, 0.5),
+        0 0 10px rgba(254, 249, 195, 0.9);
+      color: #111827;
+      font-size: 14px;
+    }
+
+    .event-card button {
+      margin-top: 8px;
+      width: 100%;
+      padding: 6px 14px;
+      font-size: 12px;
+      border-radius: 6px;
+      background: rgba(15, 23, 42, 0.9);
+      color: #f9fafb;
+      box-shadow: 0 0 8px rgba(15, 23, 42, 0.9);
+    }
+
+    .small {
+      font-size: 12px;
+      color: #0f172a;
+      display: block;
+    }
+
+    pre {
+      background: #020617;
+      color: #e5e7eb;
+      padding: 10px;
+      overflow-x: auto;
+      border-radius: 12px;
+      border: 1px solid #4b5563;
+      font-size: 12px;
+    }
+
+    @media (max-width: 800px) {
+      body {
+        padding: 24px 16px;
+      }
+      h1 {
+        font-size: 32px;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1 class="page-title">Campus Event Management System</h1>
+<p class="sub-title">Admin Portal</p>
+
+
+  <div class="layout">
+    <div class="column">
+
+      <!-- Admin Create Event -->
+      <div class="card">
+        <h2>Admin: Create Event</h2>
+        <form id="createEventForm">
+          <label>Title
+            <input type="text" id="title" required />
+          </label>
+
+          <label>Description
+            <textarea id="description" rows="3"></textarea>
+          </label>
+
+          <label>Category
+            <select id="category">
+              <option value="Technical">Technical</option>
+              <option value="Cultural">Cultural</option>
+              <option value="Sports">Sports</option>
+              <option value="Other">Other</option>
+            </select>
+          </label>
+
+          <label>Date & Time
+            <input type="datetime-local" id="event_datetime" required />
+          </label>
+
+          <label>Venue
+            <input type="text" id="venue" required />
+          </label>
+
+          <label>Registration Limit (0 = No limit)
+            <input type="number" id="reg_limit" value="0" min="0" />
+          </label>
+
+          <button type="submit">Create Event</button>
+        </form>
+      </div>
+
+      <!-- Participants -->
+      <div class="card">
+        <h2>Admin: View Participants</h2>
+        <label>Event ID
+          <input type="number" id="participantsEventId" />
+        </label>
+        <button id="loadParticipantsBtn">Load Participants</button>
+        <button id="downloadExcelBtn" disabled>Download Excel</button>
+
+        <pre id="participantsOutput" class="small">{}</pre>
+      </div>
+
+      <!-- Attendance -->
+      <div class="card">
+        <h2>Admin: View Attendance</h2>
+        <label>Event ID
+          <input type="number" id="attendanceEventId" />
+        </label>
+        <button id="loadAttendanceBtn">Load Attendance</button>
+        <button id="downloadAttendanceBtn" disabled>Download Excel</button>
+
+        <pre id="attendanceOutput" class="small">{}</pre>
+      </div>
+
+    </div>
+
+    <!-- Student Side -->
+    <div class="column">
+      <div class="card">
+        <h2>Student: Events</h2>
+        <button id="refreshEventsBtn">Refresh Events</button>
+        <div id="eventsList">Loading...</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const API_BASE = '/api';
+
+    let lastParticipants = [];
+    let lastParticipantsEventId = null;
+    let lastAttendance = [];
+    let lastAttendanceEventId = null;
+
+    async function loadEvents() {
+      const eventsList = document.getElementById('eventsList');
+      eventsList.innerHTML = 'Loading...';
+
+      try {
+        const res = await fetch(`${API_BASE}/events`);
+        const events = await res.json();
+
+        if (!Array.isArray(events) || events.length === 0) {
+          eventsList.innerHTML = '<p>No events found.</p>';
+          return;
+        }
+
+        eventsList.innerHTML = '';
+        events.forEach(ev => {
+          const div = document.createElement('div');
+          div.className = 'event-card';
+
+          const dt = new Date(ev.event_datetime);
+          const dateTimeStr = isNaN(dt.getTime()) ? ev.event_datetime : dt.toLocaleString();
+
+          div.innerHTML = `
+            <strong>ID:</strong> ${ev.id}<br/>
+            <strong>${ev.title}</strong><br/>
+            <span class="small">${ev.category}</span>
+            <span class="small">${dateTimeStr}</span>
+            <span class="small">${ev.venue}</span>
+            <button onclick="deleteEvent(${ev.id})">Delete Event</button>
+          `;
+
+          eventsList.appendChild(div);
+        });
+      } catch (err) {
+        console.error(err);
+        eventsList.innerHTML = '<p>Error loading events.</p>';
+      }
+    }
+
+    // Create Event
+    document.getElementById('createEventForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const title = document.getElementById('title').value;
+      const description = document.getElementById('description').value;
+      const category = document.getElementById('category').value;
+      const event_datetime = document.getElementById('event_datetime').value;
+      const venue = document.getElementById('venue').value;
+      const reg_limit = parseInt(document.getElementById('reg_limit').value || '0', 10);
+
+      try {
+        const res = await fetch(`${API_BASE}/events`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            title, description, category, event_datetime, venue, reg_limit
+          })
+        });
+
+        const data = await res.json();
+        alert(data.message || 'Event created');
+
+        if (res.ok) {
+          e.target.reset();
+          loadEvents();
+        }
+      } catch (err) {
+        console.error(err);
+        alert('Error creating event');
+      }
+    });
+
+    // Load Participants
+    document.getElementById('loadParticipantsBtn').addEventListener('click', async () => {
+      const eventId = document.getElementById('participantsEventId').value;
+      const output = document.getElementById('participantsOutput');
+      const downloadBtn = document.getElementById('downloadExcelBtn');
+
+      if (!eventId) {
+        alert('Please enter Event ID');
+        return;
+      }
+      output.textContent = 'Loading...';
+      downloadBtn.disabled = true;
+
+      try {
+        const res = await fetch(`${API_BASE}/events/${eventId}/participants`);
+        const data = await res.json();
+        lastParticipants = Array.isArray(data) ? data : [];
+        lastParticipantsEventId = eventId;
+
+        if (!Array.isArray(data) || data.length === 0) {
+          output.textContent = 'No participants found.';
+          return;
+        }
+        output.textContent = JSON.stringify(data, null, 2);
+        downloadBtn.disabled = false;
+      } catch {
+        output.textContent = 'Error loading participants.';
+      }
+    });
+
+    document.getElementById('downloadExcelBtn').addEventListener('click', () => {
+      if (!lastParticipants.length) {
+        alert('No participants to download.');
+        return;
+      }
+      const worksheet = XLSX.utils.json_to_sheet(lastParticipants);
+      const workbook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(workbook, worksheet, 'Participants');
+      XLSX.writeFile(workbook, `event-${lastParticipantsEventId}-participants.xlsx`);
+    });
+
+    // Load Attendance
+    document.getElementById('loadAttendanceBtn').addEventListener('click', async () => {
+      const eventId = document.getElementById('attendanceEventId').value;
+      const output = document.getElementById('attendanceOutput');
+      const downloadBtn = document.getElementById('downloadAttendanceBtn');
+
+      if (!eventId) {
+        alert('Please enter Event ID');
+        return;
+      }
+      output.textContent = 'Loading...';
+      downloadBtn.disabled = true;
+
+      try {
+        const res = await fetch(`${API_BASE}/events/${eventId}/attendance`);
+        const data = await res.json();
+        lastAttendance = Array.isArray(data) ? data : [];
+        lastAttendanceEventId = eventId;
+
+        if (!data.length) {
+          output.textContent = 'No attendance found.';
+          return;
+        }
+        output.textContent = JSON.stringify(data, null, 2);
+        downloadBtn.disabled = false;
+      } catch {
+        output.textContent = 'Error loading attendance.';
+      }
+    });
+
+    document.getElementById('downloadAttendanceBtn').addEventListener('click', () => {
+      if (!lastAttendance.length) {
+        alert('No attendance to download.');
+        return;
+      }
+      const worksheet = XLSX.utils.json_to_sheet(lastAttendance);
+      const workbook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(workbook, worksheet, 'Attendance');
+      XLSX.writeFile(workbook, `attendance-event-${lastAttendanceEventId}.xlsx`);
+    });
+
+    // Delete Event
+    async function deleteEvent(id) {
+      const confirmDelete = confirm(`Delete event ID ${id}?`);
+      if (!confirmDelete) return;
+      try {
+        const res = await fetch(`${API_BASE}/events/${id}`, { method: 'DELETE' });
+        const data = await res.json();
+        alert(data.message || 'Event deleted');
+        if (res.ok) loadEvents();
+      } catch {
+        alert('Error deleting event');
+      }
+    }
+
+    document.getElementById('refreshEventsBtn').addEventListener('click', loadEvents);
+    window.onload = loadEvents;
+  </script>
+
+  <!-- Excel Script -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+</body>
+</html>
